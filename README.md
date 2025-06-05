@@ -1,9 +1,6 @@
 # Amirza-Game
 
-https://argh94.github.io/Amirza-Game/
 
-
-![تصویر پیش‌نمایش بازی](https://via.placeholder.com/800x400.png?text=Amirza+Web+Game+Preview)  
 *یک تجربه متفاوت و مدرن از بازی کلمه‌یابی به زبان فارسی، الهام‌گرفته از آمیرزا*
 
 ---
@@ -32,7 +29,7 @@ https://argh94.github.io/Amirza-Game/
 
 | دسکتاپ | موبایل |
 |--------|--------|
-| ![پیش‌نمایش دسکتاپ](https://via.placeholder.com/400x300.png?text=Desktop+Preview) | ![پیش‌نمایش موبایل](https://via.placeholder.com/200x400.png?text=Mobile+Preview) |
+| ![پیش‌نمایش دسکتاپ](https://github.com/Argh94/Amirza-Game/blob/main/screenshot/2.jpg/400x300.png?text=Desktop+Preview) | ![پیش‌نمایش موبایل](https://github.com/Argh94/Amirza-Game/blob/main/screenshot/1.jpg/200x400.png?text=Mobile+Preview) |
 
 > پیشنهاد: اسکرین‌شات‌های واقعی بازی را در فولدر `screenshots` قرار دهید و لینک را جایگزین کنید.
 
