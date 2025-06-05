@@ -29,7 +29,7 @@
 
 | دسکتاپ | موبایل |
 |--------|--------|
-| ![پیش‌نمایش دسکتاپ](https://github.com/Argh94/Amirza-Game/blob/main/screenshot/2.jpg/400x300.png?text=Desktop+Preview) | ![پیش‌نمایش موبایل](https://github.com/Argh94/Amirza-Game/blob/main/screenshot/1.jpg/200x400.png?text=Mobile+Preview) |
+| ![پیش‌نمایش دسکتاپ](https://github.com/Argh94/Amirza-Game/blob/main/screenshot/2.jpg) | ![پیش‌نمایش موبایل](https://github.com/Argh94/Amirza-Game/blob/main/screenshot/1.jpg) |
 
 > پیشنهاد: اسکرین‌شات‌های واقعی بازی را در فولدر `screenshots` قرار دهید و لینک را جایگزین کنید.
 
