@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بازی آمیرزای من</title>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/shabnam@4.0.0/shabnam.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>بازی آمیرزای من</h1>
+        <div id="error-message"></div>
+        <div id="hint-message"></div>
+        <div id="timer-message"></div>
+        <div class="game-info">
+            <span>مرحله: <span id="stage">1</span></span>
+            <span>امتیاز: <span id="score">0</span></span>
+            <span>زمان: <span id="timer">120</span> ثانیه</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div id="current-word"></div>
+        <div class="letters" id="letters"></div>
+        <div class="buttons">
+            <button id="submit-word">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+                تأیید
+            </button>
+            <button id="clear-word">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M3 6h18M5 6v14a2 2 0 002 2h10a2 2 0 002-2V6M10 11v6M14 11v6"/>
+                </svg>
+                پاک کردن
+            </button>
+            <button id="hint-button" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                راهنمایی (<span id="bonus-score">0</span>)
+            </button>
+            <button id="reset-game">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M23 4v6h-6M1 20v-6h6m6-10a9 9 0 010 18"/>
+                </svg>
+                ریست
+            </button>
+        </div>
+        <div id="found-words"><strong>کلمات پیدا شده:</strong></div>
+        <div id="creative-words"><strong>کلمات خلاقانه شما:</strong></div>
+        <div class="sound-control">
+            <span id="sound-toggle" class="sound-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM19 9l-3.5 3.5M19 15l-3.5-3.5"/>
+                </svg>
+            </span>
+        </div>
+        <footer>
+            <a href="https://github.com/Argh94" target="_blank">
+                <span class="github-logo">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </span>
+            </a>
+        </footer>
+    </div>
+    <div id="game-over">
+        <div>
+            <p id="game-over-text">بازی تمام شد!</p>
+            <p>امتیاز شما: <span id="final-score"></span></p>
+            <button onclick="restartGame()">شروع دوباره</button>
+        </div>
+    </div>
+    <audio id="click-sound" src="https://www.soundjay.com/buttons/button-09.mp3"></audio>
+    <audio id="success-sound" src="https://www.soundjay.com/buttons/beep-07.mp3"></audio>
+    <audio id="stage-sound" src="https://www.soundjay.com/buttons/beep-02.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
