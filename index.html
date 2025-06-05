@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>بازی آمیرزای من</title>
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Shabnam', sans-serif;
+            background: linear-gradient(135deg, #ff6b81, #ffd1dc, #80d8ff, #a7f3d0);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            height: 100%;
+            overflow: auto;
+            color: #333;
+            animation: gradient 10s ease infinite;
+            background-size: 600% 600%;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @media (max-width: 600px) {
+            body {
+                min-height: 100vh;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+            }
+        }
+        .game-container {
+            background: #fff;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 95%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            animation: popIn 1s ease;
+        }
+        @media (max-width: 600px) {
+            .game-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+                padding: 15px;
+                box-shadow: none;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-sizing: border-box;
+            }
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.7) rotate(-5deg); }
+            60% { opacity: 1; transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+        h1 {
+            font-size: 2.4em;
+            color: #ff4081;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            animation: glow 2s infinite;
+        }
+        @keyframes glow {
+            0% { text-shadow: 2px 2px 5px rgba(255, 64, 129, 0.5); }
+            50% { text-shadow: 2px 2px 10px rgba(255, 64, 129, 0.8); }
+            100% { text-shadow: 2px 2px 5px rgba(255, 64, 129, 0.5); }
+        }
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1em;
+            color: #444;
+            font-weight: 700;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e0e0e0;
+            border-radius: 7px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #a5d6a7);
+            transition: width 0.6s ease;
+            animation: progressPulse 2s infinite;
+        }
+        @keyframes progressPulse {
+            0% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+            50% { box-shadow: 0 0 10px rgba(76, 175, 80, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+        }
+        #current-word {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 18px;
+            min-height: 40px;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .letters {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .letter {
+            background: linear-gradient(135deg, #ffeb3b, #ff9800);
+            border-radius: 18px;
+            padding: 12px;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            min-width: 50px;
+            text-align: center;
+            position: relative;
+        }
+        @media (max-width: 600px) {
+            .letter {
+                padding: 8px;
+                font-size: 1.1em;
+                min-width: 40px;
+                animation: none;
+            }
+        }
+        .letter:hover {
+            transform: scale(1.25) rotate(10deg);
+            background: linear-gradient(135deg, #ff9800, #ffeb3b);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: wobble 0.5s;
+        }
+        @keyframes wobble {
+            0% { transform: rotate(10deg); }
+            25% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+            100% { transform: rotate(10deg); }
+        }
+        .letter.selected {
+            background: linear-gradient(135deg, #ff4081, #d81b60);
+            color: #fff;
+            transform: scale(0.85);
+            animation: bounce 0.3s;
+        }
+        @keyframes bounce {
+            0% { transform: scale(0.85); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(0.85); }
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 1em;
+            font-family: 'Shabnam', sans-serif;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 600px) {
+            button {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+        }
+        button svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+            fill: none;
+        }
+        #submit-word {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: #fff;
+        }
+        #submit-word:hover {
+            background: linear-gradient(135deg, #45a049, #5cb85c);
+            transform: scale(1.1);
+        }
+        #clear-word {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            color: #fff;
+        }
+        #clear-word:hover {
+            background: linear-gradient(135deg, #d32f2f, #e53935);
+            transform: scale(1.1);
+        }
+        #hint-button {
+            background: linear-gradient(135deg, #2196f3, #42a5f5);
+            color: #fff;
+        }
+        #hint-button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #1976d2, #2196f3);
+            transform: scale(1.1);
+        }
+        #reset-game {
+            background: linear-gradient(135deg, #9c27b0, #ab47bc);
+            color: #fff;
+        }
+        #reset-game:hover {
+            background: linear-gradient(135deg, #7b1fa2, #8e24aa);
+            transform: scale(1.1);
+        }
+        #found-words, #creative-words {
+            margin-top: 15px;
+            max-height: 120px;
+            overflow-y: auto;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 18px;
+            font-size: 0.9em;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .found-word, .creative-word {
+            margin: 6px 0;
+            padding: 8px;
+            border-radius: 12px;
+            animation: zoomIn 0.5s ease;
+        }
+        .found-word {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .creative-word {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        #game-over {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 1.8em;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+        @media (max-width: 600px) {
+            #game-over {
+                font-size: 1.5em;
+            }
+        }
+        #game-over button {
+            background: linear-gradient(135deg, #ff4081, #d81b60);
+            margin-top: 20px;
+        }
+        #game-over button:hover {
+            background: linear-gradient(135deg, #d81b60, #ff4081);
+            transform: scale(1.1);
+        }
+        #error-message, #hint-message, #timer-message {
+            color: #f44336;
+            font-size: 1em;
+            margin-bottom: 15px;
+            display: none;
+            animation: popIn 0.3s ease;
+        }
+        #hint-message {
+            color: #2196f3;
+        }
+        #timer-message {
+            color: #fff;
+            background: linear-gradient(135deg, #ff6f61, #ff8a76);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-size: 1.2em;
+            animation: shakeIn 0.5s ease;
+        }
+        @media (max-width: 600px) {
+            #timer-message {
+                font-size: 1em;
+                padding: 12px;
+            }
+        }
+        @keyframes shakeIn {
+            0% { transform: translateX(-20px); opacity: 0; }
+            20% { transform: translateX(20px); }
+            40% { transform: translateX(-15px); }
+            60% { transform: translateX(15px); }
+            80% { transform: translateX(-5px); }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .sound-control {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        @media (max-width: 600px) {
+            .sound-control {
+                top: 10px;
+                left: 10px;
+            }
+        }
+        .sound-icon {
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sound-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #333;
+            fill: none;
+        }
+        .sound-icon .sound-on {
+            display: inline-block;
+        }
+        .sound-icon .sound-off {
+            display: none;
+        }
+        .sound-icon.muted .sound-on {
+            display: none;
+        }
+        .sound-icon.muted .sound-off {
+            display: inline-block;
+        }
+        .github-logo {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .github-logo:hover {
+            transform: scale(1.2) rotate(15deg);
+        }
+        .github-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: #333;
+        }
+        @media (max-width: 600px) {
+            .sound-icon svg, .github-logo svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="sound-control">
+            <span class="sound-icon" id="sound-toggle">
+                <svg class="sound-on" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM15 9c1.66 0 3 1.34 3 3s-1.34 3-3 3"/>
+                </svg>
+                <svg class="sound-off" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM22 9l-6 6M16 9l6 6"/>
+                </svg>
+            </span>
+        </div>
+        <h1>بازی آمیرزای من</h1>
+        <div id="error-message"></div>
+        <div id="hint-message"></div>
+        <div id="timer-message"></div>
+        <div class="game-info">
+            <span>مرحله: <span id="stage">1</span></span>
+            <span>امتیاز: <span id="score">0</span></span>
+            <span>زمان: <span id="timer">120</span> ثانیه</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="letters" id="letters"></div>
+        <div id="current-word"></div>
+        <div class="buttons">
+            <button id="submit-word">
+                <svg viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M5 13l4 4L19 7"/>
+                </svg>
+                تأیید
+            </button>
+            <button id="clear-word">
+                <svg viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M3 6h18M5 6l1 14h12l1-14M10 11v6M14 11v6M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2"/>
+                </svg>
+                پاک کردن
+            </button>
+            <button id="hint-button" disabled>
+                <svg viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M12 20h9M12 4a8 8 0 00-8 8c0 1.5.5 2.9 1.3 4.1L4 20l3.9-1.3c1.2.8 2.6 1.3 4.1 1.3s2.9-.5 4.1-1.3L20 20l-1.3-3.9c.8-1.2 1.3-2.6 1.3-4.1a8 8 0 00-8-8z"/>
+                </svg>
+                راهنمایی (<span id="bonus-score">0</span>)
+            </button>
+            <button id="reset-game">
+                <svg viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M12 5V1L7 6l5 5V7a5 5 0 015 5 5 5 0 01-5 5 5 5 0 01-5-5H4a7 7 0 007 7 7 7 0 007-7 7 7 0 00-7-7z"/>
+                </svg>
+                شروع دوباره
+            </button>
+        </div>
+        <div id="found-words"><strong>کلمات پیدا شده:</strong></div>
+        <div id="creative-words"><strong>کلمات خلاقانه شما:</strong></div>
+        <footer>
+            ساخته‌شده توسط Argh94
+            <a class="github-logo" href="https://github.com/Argh94" target="_blank">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.5 2.28 1.07 2.84.81.09-.64.35-1.07.63-1.32-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.52.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85V19.5c0 .27.16.59.67.5A10 10 0 0022 12 10 10 0 0012 2z"/>
+                </svg>
+            </a>
+        </footer>
+    </div>
+    <div id="game-over">
+        <div>
+            <p id="game-over-text">بازی تمام شد!</p>
+            <p>امتیاز شما: <span id="final-score"></span></p>
+            <button onclick="restartGame()">شروع دوباره</button>
+        </div>
+    </div>
+    <audio id="click-sound" src="https://www.soundjay.com/buttons/button-09.mp3"></audio>
+    <audio id="success-sound" src="https://www.soundjay.com/buttons/beep-07.mp3"></audio>
+    <audio id="stage-sound" src="https://www.soundjay.com/buttons/beep-02.mp3"></audio>
+    <script>
+        let wordsData = {};
+        let currentStage = 1;
+        let score = 0;
+        let bonusScore = 0;
+        let timeLeft = 120;
+        let timerInterval;
+        let selectedLetters = [];
+        let foundWords = [];
+        let creativeWords = [];
+        let soundEnabled = true;
+        let soundInitialized = false;
+
+        const clickSound = new Audio('https://www.soundjay.com/buttons/button-09.mp3');
+        const successSound = new Audio('https://www.soundjay.com/buttons/beep-07.mp3');
+        const stageSound = new Audio('https://www.soundjay.com/buttons/beep-02.mp3');
+
+        function initializeSound() {
+            if (!soundInitialized) {
+                [clickSound, successSound, stageSound].forEach(audio => {
+                    audio.load();
+                    audio.play().then(() => {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    }).catch(err => console.log('خطا در آماده‌سازی صدا:', err));
+                });
+                soundInitialized = true;
+            }
+        }
+
+        function playSound(audio) {
+            if (soundEnabled && soundInitialized) {
+                audio.currentTime = 0;
+                audio.play().catch(err => console.log('خطا در پخش صدا:', err));
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.innerHTML = message;
+            errorDiv.style.display = 'block';
+            document.querySelector('.game-container').style.pointerEvents = 'none';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+                document.querySelector('.game-container').style.pointerEvents = 'auto';
+            }, 2000);
+        }
+
+        function showHint() {
+            const stageData = wordsData[currentStage.toString()];
+            const stageWords = stageData.words || stageData;
+            const remainingWords = stageWords.filter(word => !foundWords.includes(word));
+            if (remainingWords.length > 0) {
+                const hintWord = remainingWords[0];
+                document.getElementById('hint-message').innerText = `راهنمایی: کلمه‌ای با حرف «${hintWord[0]}» شروع می‌شود`;
+                document.getElementById('hint-message').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('hint-message').style.display = 'none';
+                }, 3000);
+                bonusScore -= 5;
+                document.getElementById('bonus-score').innerText = bonusScore;
+                document.getElementById('hint-button').disabled = bonusScore < 5;
+                saveProgress();
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('currentStage', currentStage);
+            localStorage.setItem('score', score);
+            localStorage.setItem('bonusScore', bonusScore);
+            localStorage.setItem('creativeWords', JSON.stringify(creativeWords));
+            localStorage.setItem('soundEnabled', soundEnabled);
+        }
+
+        function loadProgress() {
+            currentStage = parseInt(localStorage.getItem('currentStage')) || 1;
+            score = parseInt(localStorage.getItem('score')) || 0;
+            bonusScore = parseInt(localStorage.getItem('bonusScore')) || 0;
+            creativeWords = JSON.parse(localStorage.getItem('creativeWords')) || [];
+            soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+            document.getElementById('score').innerText = score;
+            document.getElementById('stage').innerText = currentStage;
+            document.getElementById('bonus-score').innerText = bonusScore;
+            document.getElementById('hint-button').disabled = bonusScore < 5;
+            document.getElementById('sound-toggle').classList.toggle('muted', !soundEnabled);
+            creativeWords.forEach(word => {
+                document.getElementById('creative-words').innerHTML += `<div class="creative-word">${word}</div>`;
+            });
+        }
+
+        fetch('./amirza.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فایل JSON پیدا
